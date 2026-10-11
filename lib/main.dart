@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const SteamInputInstallerApp());
@@ -58,6 +59,10 @@ class InstallerPage extends StatefulWidget {
 }
 
 class _InstallerPageState extends State<InstallerPage> {
+  static final _repositoryUri = Uri.parse(
+    'https://github.com/SortOmega/ps5_dualshok_steam_setup',
+  );
+
   VerificationResult? _result;
   bool _checking = false;
   bool _installing = false;
@@ -128,6 +133,24 @@ class _InstallerPageState extends State<InstallerPage> {
         ],
       ),
     );
+  }
+
+  Future<void> _openRepository() async {
+    final opened = await launchUrl(
+      _repositoryUri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (!opened && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            widget.spanish
+                ? 'No se pudo abrir el repositorio de GitHub.'
+                : 'The GitHub repository could not be opened.',
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -207,12 +230,21 @@ class _InstallerPageState extends State<InstallerPage> {
                       ),
                     ),
                   ),
-                  Text(
-                    widget.spanish
-                        ? 'Solo modifica reglas udev de Steam Input.'
-                        : 'Only Steam Input udev rules are changed.',
-                    style: Theme.of(context).textTheme.bodySmall
-                        ?.copyWith(color: Colors.white54),
+                  Column(
+                    children: [
+                      Text(
+                        widget.spanish
+                            ? 'Solo modifica reglas udev de Steam Input.'
+                            : 'Only Steam Input udev rules are changed.',
+                        style: Theme.of(context).textTheme.bodySmall
+                            ?.copyWith(color: Colors.white54),
+                      ),
+                      TextButton.icon(
+                        onPressed: _openRepository,
+                        icon: const Icon(Icons.code, size: 18),
+                        label: const Text('GitHub repository'),
+                      ),
+                    ],
                   ),
                 ],
               ),

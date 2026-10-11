@@ -31,6 +31,8 @@ void main() {
     expect(find.text('Steam Input Setup'), findsOneWidget);
     expect(find.text('PS5'), findsOneWidget);
     expect(find.text('Check again'), findsOneWidget);
+    expect(find.text('GitHub repository'), findsOneWidget);
+    expect(find.byIcon(Icons.code), findsOneWidget);
   });
 
   testWidgets('switches to Spanish', (tester) async {
