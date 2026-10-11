@@ -3,6 +3,10 @@
 Flutter desktop installer for configuring PS5 DualSense and DualSense Edge
 controllers for Steam Input on Linux.
 
+
+
+This project is based from the repository [SteamInput-PS5ControllerLinux](https://github.com/SortOmega/SteamInput-PS5ControllerLinux) also made by me, which is a step by step guide to install the udev rules for the PS5 controllers. This project is a GUI installer that automates the process.
+
 ## What it does
 
 - Checks that Steam is installed.
