@@ -134,7 +134,8 @@ class _InstallerPageState extends State<InstallerPage> {
   Widget build(BuildContext context) {
     final result = _result;
     final ready = result?.isReady ?? false;
-    final hasMissingRules = result != null && result.missing.isNotEmpty;
+    final hasMissingRules =
+        result != null && result.steamInstalled && result.missing.isNotEmpty;
 
     return Scaffold(
       body: SafeArea(
@@ -164,6 +165,8 @@ class _InstallerPageState extends State<InstallerPage> {
                               result: result,
                               spanish: widget.spanish,
                             ),
+                          if (result != null && !result.steamInstalled)
+                            _SteamMissingBanner(spanish: widget.spanish),
                           const SizedBox(height: 22),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -304,6 +307,43 @@ class _Hero extends StatelessWidget {
             const Text(
               'PS5',
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SteamMissingBanner extends StatelessWidget {
+  const _SteamMissingBanner({required this.spanish});
+
+  final bool spanish;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: const Color(0xff4a2028),
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.error,
+              color: Colors.redAccent,
+              size: 30,
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(
+                spanish
+                    ? 'Steam no está instalado. Instala Steam para habilitar la configuración de Steam Input.'
+                    : 'Steam is not installed. Install Steam to enable Steam Input setup.',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ],
         ),
