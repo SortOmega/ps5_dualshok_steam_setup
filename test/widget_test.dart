@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ps5_dualshok_steam_setup/main.dart';
+import 'package:ps5_dualshok_steam_setup/app/steam_input_app.dart';
+import 'package:ps5_dualshok_steam_setup/services/steam_input_installer.dart';
 
 class _FakeSteamInputInstaller extends SteamInputInstaller {
   @override
